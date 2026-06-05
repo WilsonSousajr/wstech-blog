@@ -1,0 +1,17 @@
+{{ define "main" }}
+  <div class="page-intro">
+    <h1>{{ .Site.Title }}</h1>
+    <p>{{ .Site.Params.tagline | default .Site.Params.description }}</p>
+  </div>
+
+  {{ $posts := where .Site.RegularPages "Type" "posts" }}
+  {{ with $posts }}
+  <div class="post-list">
+    {{ range . }}
+      {{ partial "post-card.html" . }}
+    {{ end }}
+  </div>
+  {{ else }}
+  <p class="post-card-desc">{{ if eq .Site.Language.Lang "pt-br" }}Nenhum artigo ainda.{{ else }}No posts yet.{{ end }}</p>
+  {{ end }}
+{{ end }}

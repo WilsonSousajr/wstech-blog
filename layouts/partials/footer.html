@@ -1,0 +1,10 @@
+{{- $year := now.Year -}}
+<footer class="site-footer">
+  <div class="container">
+    <span>© {{ $year }} {{ .Site.Params.author }}</span>
+    <span>
+      {{ with .OutputFormats.Get "rss" }}<a href="{{ .Permalink }}">RSS</a> · {{ end }}
+      <a href="{{ .Site.Params.portfolioURL }}">{{ replace .Site.Params.portfolioURL "https://" "" }}</a>
+    </span>
+  </div>
+</footer>

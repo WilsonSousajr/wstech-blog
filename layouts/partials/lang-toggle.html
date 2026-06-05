@@ -1,0 +1,20 @@
+{{- /*
+  Language switch. For each language other than the current one, link to this
+  page's translation if it exists, otherwise fall back to that language's home.
+*/ -}}
+{{- $page := . -}}
+{{- $curLang := .Site.Language.Lang -}}
+{{- $shorts := dict "en" "EN" "pt-br" "PT" -}}
+{{- range hugo.Sites -}}
+  {{- $s := . -}}
+  {{- $lang := $s.Language.Lang -}}
+  {{- if ne $lang $curLang -}}
+    {{- $target := "" -}}
+    {{- range $page.AllTranslations -}}
+      {{- if eq .Site.Language.Lang $lang -}}{{- $target = .RelPermalink -}}{{- end -}}
+    {{- end -}}
+    {{- if not $target -}}{{- $target = $s.Home.RelPermalink -}}{{- end -}}
+    {{- $short := index $shorts $lang | default (upper $lang) -}}
+    <a class="icon-btn" href="{{ $target }}" hreflang="{{ $lang }}" aria-label="{{ $s.Language.Label }}">{{ $short }}</a>
+  {{- end -}}
+{{- end -}}

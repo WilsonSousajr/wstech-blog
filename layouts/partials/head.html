@@ -1,0 +1,61 @@
+{{- $title := .Title -}}
+{{- $isHome := .IsHome -}}
+{{- $siteTitle := .Site.Title -}}
+{{- $desc := or .Description .Summary .Site.Params.description -}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{{/* Set the theme before first paint to avoid a flash of the wrong theme. */}}
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('theme');
+      if (!t) {
+        t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      }
+      document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
+
+<title>{{ if $isHome }}{{ $siteTitle }}{{ else }}{{ $title }} · {{ $siteTitle }}{{ end }}</title>
+<meta name="description" content="{{ $desc | plainify }}">
+<meta name="author" content="{{ .Site.Params.author }}">
+<link rel="canonical" href="{{ .Permalink }}">
+
+{{/* hreflang alternates for the bilingual pages */}}
+{{ range .AllTranslations }}
+<link rel="alternate" hreflang="{{ .Site.Language.Lang }}" href="{{ .Permalink }}">
+{{ end }}
+
+{{/* Open Graph / Twitter */}}
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:title" content="{{ if $isHome }}{{ $siteTitle }}{{ else }}{{ $title }}{{ end }}">
+<meta property="og:description" content="{{ $desc | plainify }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:site_name" content="{{ $siteTitle }}">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" type="image/svg+xml" href="/wslogo.svg">
+
+{{/* Fonts — same Outfit link the portfolio uses, byte-for-byte */}}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+{{/* RSS autodiscovery */}}
+{{ with .OutputFormats.Get "rss" }}
+<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $siteTitle }}">
+{{ end }}
+
+{{/* Styles — bundle main + grayscale chroma into one fingerprinted file */}}
+{{ $main := resources.Get "css/main.css" }}
+{{ $chroma := resources.Get "css/chroma.css" }}
+{{ $css := slice $main $chroma | resources.Concat "css/bundle.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+
+{{/* Theme toggle behavior */}}
+{{ $js := resources.Get "js/theme.js" | minify | fingerprint }}
+<script src="{{ $js.RelPermalink }}" defer></script>

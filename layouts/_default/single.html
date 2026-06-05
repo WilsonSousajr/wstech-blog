@@ -1,0 +1,17 @@
+{{ define "main" }}
+  <article>
+    <header class="post-header">
+      {{ with .Params.tags }}
+      <div class="tag-row">
+        {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
+      </div>
+      {{ end }}
+      <h1 class="post-title">{{ .Title }}</h1>
+      {{ $readLabel := "min read" }}{{ if eq .Site.Language.Lang "pt-br" }}{{ $readLabel = "min de leitura" }}{{ end }}
+      <p class="post-meta">{{ .Date.Format "Jan 2, 2006" }} · {{ .ReadingTime }} {{ $readLabel }}</p>
+    </header>
+    <div class="prose">
+      {{ .Content }}
+    </div>
+  </article>
+{{ end }}

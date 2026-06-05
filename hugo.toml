@@ -1,0 +1,38 @@
+baseURL = "https://blog.wstech.tech/"
+title = "Wilson Sousa — Blog"
+defaultContentLanguage = "en"
+enableRobotsTXT = true
+
+[languages]
+  [languages.en]
+    contentDir = "content/en"
+    label = "English"
+    locale = "en-US"
+    weight = 1
+    title = "Wilson Sousa — Blog"
+    [languages.en.params]
+      tagline = "Articles on backend, DevOps, and systems engineering."
+  [languages.pt-br]
+    contentDir = "content/pt-br"
+    label = "Português"
+    locale = "pt-BR"
+    weight = 2
+    title = "Wilson Sousa — Blog"
+    [languages.pt-br.params]
+      tagline = "Artigos sobre backend, DevOps e engenharia de sistemas."
+
+[markup]
+  [markup.highlight]
+    noClasses = false   # emit CSS classes so we can grayscale-theme Chroma ourselves
+    guessSyntax = true
+    tabWidth = 2
+  [markup.goldmark.renderer]
+    unsafe = true       # allow raw HTML in markdown (comments, occasional inline html)
+
+[outputs]
+  home = ["HTML", "RSS"]
+
+[params]
+  portfolioURL = "https://wstech.tech"
+  author = "Wilson Sousa"
+  description = "Articles on backend, DevOps, and systems engineering."

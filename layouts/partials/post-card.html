@@ -1,0 +1,11 @@
+{{- /* Renders one post as a clickable card. Expects a Page as context. */ -}}
+<a class="card" href="{{ .RelPermalink }}">
+  {{ with .Params.tags }}
+  <div class="tag-row">
+    {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
+  </div>
+  {{ end }}
+  <h2 class="post-card-title">{{ .Title }}</h2>
+  <p class="post-card-date">{{ .Date.Format "Jan 2, 2006" }}</p>
+  {{ with .Description }}<p class="post-card-desc">{{ . }}</p>{{ end }}
+</a>

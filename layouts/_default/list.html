@@ -1,0 +1,16 @@
+{{ define "main" }}
+  <div class="page-intro">
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+  </div>
+
+  {{ with .Pages }}
+  <div class="post-list">
+    {{ range . }}
+      {{ partial "post-card.html" . }}
+    {{ end }}
+  </div>
+  {{ else }}
+  <p class="post-card-desc">{{ if eq .Site.Language.Lang "pt-br" }}Nenhum artigo ainda.{{ else }}No posts yet.{{ end }}</p>
+  {{ end }}
+{{ end }}
