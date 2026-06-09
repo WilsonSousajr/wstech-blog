@@ -1,5 +1,5 @@
 baseURL = "https://blog.wstech.tech/"
-title = "Wilson Sousa — Blog"
+title = "Wilson Sousa"
 defaultContentLanguage = "en"
 enableRobotsTXT = true
 
@@ -9,17 +9,17 @@ enableRobotsTXT = true
     label = "English"
     locale = "en-US"
     weight = 1
-    title = "Wilson Sousa — Blog"
+    title = "Wilson Sousa"
     [languages.en.params]
-      tagline = "Articles on backend, DevOps, and systems engineering."
+      tagline = "Engineering, software, and the occasional rant."
   [languages.pt-br]
     contentDir = "content/pt-br"
     label = "Português"
     locale = "pt-BR"
     weight = 2
-    title = "Wilson Sousa — Blog"
+    title = "Wilson Sousa"
     [languages.pt-br.params]
-      tagline = "Artigos sobre backend, DevOps e engenharia de sistemas."
+      tagline = "Engenharia, software e um desabafo ocasional."
 
 [markup]
   [markup.highlight]
@@ -35,4 +35,4 @@ enableRobotsTXT = true
 [params]
   portfolioURL = "https://wstech.tech"
   author = "Wilson Sousa"
-  description = "Articles on backend, DevOps, and systems engineering."
+  description = "Engineering, software, and the occasional rant."
