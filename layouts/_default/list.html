@@ -1,16 +1,19 @@
 {{ define "main" }}
+  {{ $isFeed := and .IsSection (in site.Params.sections .Section) }}
   <div class="page-intro">
     <h1>{{ .Title }}</h1>
     {{ with .Description }}<p>{{ . }}</p>{{ end }}
   </div>
 
+  {{ if $isFeed }}{{ partial "section-tabs.html" . }}{{ end }}
+
   {{ with .Pages }}
   <div class="post-list">
     {{ range . }}
-      {{ partial "post-card.html" . }}
+      {{ partial "post-card.html" (dict "page" . "showSection" (not $isFeed)) }}
     {{ end }}
   </div>
   {{ else }}
-  <p class="post-card-desc">{{ if eq .Site.Language.Lang "pt-br" }}Nenhum artigo ainda.{{ else }}No posts yet.{{ end }}</p>
+  <p class="empty">{{ i18n "noPosts" }}</p>
   {{ end }}
 {{ end }}

@@ -1,0 +1,15 @@
+{{- /* GA4 behind consent: production only, and only once params.gaMeasurementId is set. See assets/js/consent.js. */ -}}
+{{- with site.Params.gaMeasurementId }}{{ if hugo.IsProduction }}
+<div id="consent" class="consent" role="region" aria-label="{{ i18n "consentLabel" }}" data-ga="{{ . }}" hidden>
+  <p>
+    {{ i18n "consentMessage" }}
+    {{ with site.GetPage "/privacy" }}<a href="{{ .RelPermalink }}">{{ i18n "privacy" }}</a>{{ end }}
+  </p>
+  <div class="consent-actions">
+    <button type="button" class="btn-ghost" data-decline>{{ i18n "consentDecline" }}</button>
+    <button type="button" class="btn" data-accept>{{ i18n "consentAccept" }}</button>
+  </div>
+</div>
+{{ $js := resources.Get "js/consent.js" | minify | fingerprint }}
+<script src="{{ $js.RelPermalink }}" defer></script>
+{{ end }}{{ end -}}

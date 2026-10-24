@@ -1,17 +1,51 @@
 {{ define "main" }}
-  <article>
+  {{ $isPost := in site.Params.sections .Section }}
+  <article class="post">
     <header class="post-header">
-      {{ with .Params.tags }}
-      <div class="tag-row">
-        {{ range . }}<span class="tag">{{ . }}</span>{{ end }}
-      </div>
+      {{ if $isPost }}
+      <a class="post-kicker" href="{{ .CurrentSection.RelPermalink }}">{{ .CurrentSection.Title }}</a>
       {{ end }}
       <h1 class="post-title">{{ .Title }}</h1>
-      {{ $readLabel := "min read" }}{{ if eq .Site.Language.Lang "pt-br" }}{{ $readLabel = "min de leitura" }}{{ end }}
-      <p class="post-meta">{{ .Date.Format "Jan 2, 2006" }} · {{ .ReadingTime }} {{ $readLabel }}</p>
+      {{ if $isPost }}
+      <p class="post-meta">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_long" }}</time>
+        <span aria-hidden="true">·</span>
+        {{ .ReadingTime }} {{ i18n "minRead" }}
+      </p>
+      {{ with .Params.tags }}
+      <div class="tag-row">
+        {{ range . }}<a class="tag" href="{{ printf "tags/%s/" (urlize .) | relLangURL }}">{{ . }}</a>{{ end }}
+      </div>
+      {{ end }}
+      {{ end }}
     </header>
+
+    {{ with partial "cover.html" . }}
+      {{- $sm := .Resize "720x webp q80" }}{{ $lg := .Resize "1440x webp q80" }}
+    <figure class="post-cover">
+      <img src="{{ $lg.RelPermalink }}" srcset="{{ $sm.RelPermalink }} 720w, {{ $lg.RelPermalink }} 1440w" sizes="(min-width: 760px) 720px, 100vw"
+           width="{{ $lg.Width }}" height="{{ $lg.Height }}" alt="{{ $.Params.coverAlt | default "" }}" fetchpriority="high">
+    </figure>
+    {{ end }}
+
+    {{/* Long posts get a contents box; `toc: true|false` in front matter overrides */}}
+    {{ $toc := and $isPost (gt .WordCount 900) }}
+    {{ if isset .Params "toc" }}{{ $toc = .Params.toc }}{{ end }}
+    {{ if and $toc (in .TableOfContents "<li>") }}
+    <details class="toc">
+      <summary>{{ i18n "toc" }}</summary>
+      {{ .TableOfContents }}
+    </details>
+    {{ end }}
+
     <div class="prose">
       {{ .Content }}
     </div>
   </article>
+
+  {{ if $isPost }}
+    {{ partial "post-nav.html" . }}
+    {{ partial "related.html" . }}
+    {{ partial "comments.html" . }}
+  {{ end }}
 {{ end }}

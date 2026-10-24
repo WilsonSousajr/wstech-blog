@@ -1,0 +1,9 @@
+{{- /* Older / newer post in the same section. Hugo's NextInSection points to the newer post. */ -}}
+{{- $older := .PrevInSection -}}
+{{- $newer := .NextInSection -}}
+{{- if or $older $newer }}
+<nav class="post-nav" aria-label="{{ i18n "previous" }} / {{ i18n "next" }}">
+  {{ with $older }}<a class="post-nav-link" href="{{ .RelPermalink }}" rel="prev"><span>← {{ i18n "previous" }}</span>{{ .Title }}</a>{{ else }}<span></span>{{ end }}
+  {{ with $newer }}<a class="post-nav-link post-nav-next" href="{{ .RelPermalink }}" rel="next"><span>{{ i18n "next" }} →</span>{{ .Title }}</a>{{ end }}
+</nav>
+{{- end }}

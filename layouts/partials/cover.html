@@ -1,0 +1,5 @@
+{{- /* Returns the page's cover image resource (front matter `cover`, else a bundle file named cover.*), or nothing. */ -}}
+{{- $cover := "" -}}
+{{- with .Params.cover }}{{ $cover = $.Resources.GetMatch . }}{{ end -}}
+{{- if not $cover }}{{ $cover = .Resources.GetMatch "cover.*" }}{{ end -}}
+{{- return $cover -}}
