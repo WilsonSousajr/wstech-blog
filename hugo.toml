@@ -68,6 +68,6 @@ capitalizeListTitles = false   # tag pages titled "ai", not "Ai"   # real lastmo
   # Giscus comments: render nothing until repoId/categoryId are filled in (https://giscus.app)
   [params.giscus]
     repo = "WilsonSousajr/wstech-blog"
-    repoId = ""
+    repoId = "R_kgDOSyUbPw"
     category = "Announcements"
-    categoryId = ""
+    categoryId = "DIC_kwDOSyUbP84DJhvg"
