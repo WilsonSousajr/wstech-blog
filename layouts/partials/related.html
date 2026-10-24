@@ -1,0 +1,12 @@
+{{- /* Up to 3 posts that share tags, topped up with recent posts from the same section. */ -}}
+{{- $related := where (site.RegularPages.Related .) "Section" "in" site.Params.sections -}}
+{{- $recent := complement (slice .) $related .CurrentSection.RegularPages -}}
+{{- $picks := first 3 (union $related $recent) -}}
+{{- with $picks }}
+<section class="related">
+  <h2 class="section-heading">{{ i18n "related" }}</h2>
+  <div class="post-list">
+    {{ range . }}{{ partial "post-card.html" (dict "page" . "showSection" true) }}{{ end }}
+  </div>
+</section>
+{{- end }}

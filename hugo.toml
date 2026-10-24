@@ -2,6 +2,8 @@ baseURL = "https://blog.wstech.tech/"
 title = "Wilson Sousa"
 defaultContentLanguage = "en"
 enableRobotsTXT = true
+enableGitInfo = true
+capitalizeListTitles = false   # tag pages titled "ai", not "Ai"   # real lastmod for the sitemap and article:modified_time
 
 [languages]
   [languages.en]
@@ -20,6 +22,10 @@ enableRobotsTXT = true
     title = "Wilson Sousa"
     [languages.pt-br.params]
       tagline = "Engenharia, software e um desabafo ocasional."
+    [languages.pt-br.permalinks.page]
+      off-topic = "/fora-do-tema/:slug/"
+    [languages.pt-br.permalinks.section]
+      off-topic = "/fora-do-tema/"
 
 [markup]
   [markup.highlight]
@@ -28,11 +34,40 @@ enableRobotsTXT = true
     tabWidth = 2
   [markup.goldmark.renderer]
     unsafe = true       # allow raw HTML in markdown (comments, occasional inline html)
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+
+# Tags only: an empty "categories" taxonomy would just publish blank pages
+[taxonomies]
+  tag = "tags"
 
 [outputs]
   home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+[sitemap]
+  changeFreq = "weekly"
+
+# "Keep reading" at the end of a post ranks by shared tags; single.html tops it up with recent posts
+[related]
+  includeNewer = true
+  threshold = 50
+  toLower = true
+  [[related.indices]]
+    name = "tags"
+    weight = 100
 
 [params]
   portfolioURL = "https://wstech.tech"
   author = "Wilson Sousa"
   description = "Engineering, software, and the occasional rant."
+  sections = ["posts", "off-topic"]   # what the home feed and tabs list, in order
+  # GA4 loads only in production builds, only after consent (cookie shared with wstech.tech)
+  gaMeasurementId = "G-8Q1ELZX5QB"
+  # Giscus comments: render nothing until repoId/categoryId are filled in (https://giscus.app)
+  [params.giscus]
+    repo = "WilsonSousajr/wstech-blog"
+    repoId = ""
+    category = "Announcements"
+    categoryId = ""

@@ -1,7 +1,10 @@
 {{- $title := .Title -}}
 {{- $isHome := .IsHome -}}
 {{- $siteTitle := .Site.Title -}}
-{{- $desc := or .Description .Summary .Site.Params.description -}}
+{{- $desc := or .Description .Summary .Site.Params.description | plainify | strings.TrimSpace | truncate 200 -}}
+{{- $isPost := and .IsPage (in site.Params.sections .Section) -}}
+{{- $image := "og.png" | absURL -}}
+{{- with partial "cover.html" . }}{{ $image = (.Fill "1200x630 Center jpg q85").Permalink }}{{ end -}}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -21,34 +24,56 @@
 </script>
 
 <title>{{ if $isHome }}{{ $siteTitle }}{{ else }}{{ $title }} · {{ $siteTitle }}{{ end }}</title>
-<meta name="description" content="{{ $desc | plainify }}">
+<meta name="description" content="{{ $desc }}">
 <meta name="author" content="{{ .Site.Params.author }}">
+<meta name="theme-color" content="#0a0a0a">
 <link rel="canonical" href="{{ .Permalink }}">
 
-{{/* hreflang alternates for the bilingual pages */}}
+{{/* hreflang alternates for the bilingual pages; English is the x-default */}}
 {{ range .AllTranslations }}
 <link rel="alternate" hreflang="{{ .Site.Language.Lang }}" href="{{ .Permalink }}">
+{{- if eq .Site.Language.Lang "en" }}
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
+{{- end }}
 {{ end }}
 
 {{/* Open Graph / Twitter */}}
-<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:type" content="{{ if $isPost }}article{{ else }}website{{ end }}">
 <meta property="og:title" content="{{ if $isHome }}{{ $siteTitle }}{{ else }}{{ $title }}{{ end }}">
-<meta property="og:description" content="{{ $desc | plainify }}">
+<meta property="og:description" content="{{ $desc }}">
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:site_name" content="{{ $siteTitle }}">
-<meta name="twitter:card" content="summary">
+<meta property="og:locale" content="{{ replace .Site.Language.Locale "-" "_" }}">
+{{ range .Translations }}<meta property="og:locale:alternate" content="{{ replace .Site.Language.Locale "-" "_" }}">{{ end }}
+<meta property="og:image" content="{{ $image }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{{ $image }}">
+{{ if $isPost }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">
+<meta property="article:section" content="{{ .CurrentSection.Title }}">
+{{ range .Params.tags }}<meta property="article:tag" content="{{ . }}">{{ end }}
+{{ end }}
+
+{{ partial "jsonld.html" (dict "page" . "description" $desc "image" $image "isPost" $isPost) }}
 
 <link rel="icon" type="image/svg+xml" href="/wslogo.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-{{/* Fonts — same Outfit link the portfolio uses, byte-for-byte */}}
+{{/* Fonts: Outfit for UI and headings (same as the portfolio), Literata for long-form reading */}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-{{/* RSS autodiscovery */}}
-{{ with .OutputFormats.Get "rss" }}
+{{/* RSS autodiscovery: the whole blog, plus this section's own feed on section pages */}}
+{{ with site.Home.OutputFormats.Get "rss" }}
 <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $siteTitle }}">
 {{ end }}
+{{ if .IsSection }}{{ with .OutputFormats.Get "rss" }}
+<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $.Title }} · {{ $siteTitle }}">
+{{ end }}{{ end }}
 
 {{/* Styles — bundle main + grayscale chroma into one fingerprinted file */}}
 {{ $main := resources.Get "css/main.css" }}
@@ -56,6 +81,6 @@
 {{ $css := slice $main $chroma | resources.Concat "css/bundle.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
 
-{{/* Theme toggle behavior */}}
+{{/* Theme toggle behavior (also keeps the giscus iframe in sync) */}}
 {{ $js := resources.Get "js/theme.js" | minify | fingerprint }}
 <script src="{{ $js.RelPermalink }}" defer></script>

@@ -4,6 +4,9 @@
     <span>© {{ $year }} {{ .Site.Params.author }}</span>
     <span>
       {{ with .OutputFormats.Get "rss" }}<a href="{{ .Permalink }}">RSS</a> · {{ end }}
+      {{ with site.GetPage "/privacy" }}<a href="{{ .RelPermalink }}">{{ i18n "privacy" }}</a> · {{ end }}
+      {{- /* consent.js reveals this only when the banner is active */}}
+      <button type="button" id="cookie-settings" class="link-btn" hidden>{{ i18n "cookieSettings" }}</button>{{ if and site.Params.gaMeasurementId hugo.IsProduction }} · {{ end }}
       <a href="{{ .Site.Params.portfolioURL }}">{{ replace .Site.Params.portfolioURL "https://" "" }}</a>
     </span>
   </div>
