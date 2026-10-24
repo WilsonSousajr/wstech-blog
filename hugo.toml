@@ -64,7 +64,7 @@ capitalizeListTitles = false   # tag pages titled "ai", not "Ai"   # real lastmo
   description = "Engineering, software, and the occasional rant."
   sections = ["posts", "off-topic"]   # what the home feed and tabs list, in order
   # GA4 loads only in production builds, only after consent (cookie shared with wstech.tech)
-  gaMeasurementId = ""
+  gaMeasurementId = "G-8Q1ELZX5QB"
   # Giscus comments: render nothing until repoId/categoryId are filled in (https://giscus.app)
   [params.giscus]
     repo = "WilsonSousajr/wstech-blog"
