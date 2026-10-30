@@ -3,9 +3,13 @@ title: "Privacy"
 description: "What this blog and wstech.tech collect, and how to opt out."
 ---
 
-Short version: nothing is tracked unless you say yes.
+Short version: a cookieless page counter always runs, and Google Analytics only runs if you say yes.
 
-## Analytics
+## Page counts
+
+This blog uses **Vercel Web Analytics** to count page views and see where visits come from, like a link on LinkedIn. It sets no cookies and stores nothing on your device. Vercel identifies a visit with a hash of the request that resets every day, so I can't follow you across days or tell who you are. I only see totals per page, referrer, country and device type.
+
+## Google Analytics
 
 This blog and [wstech.tech](https://wstech.tech) use **Google Analytics 4** to count which pages people read, roughly where readers come from, and what device they use. It is **only loaded after you click "Accept"** on the cookie banner. If you decline, or never answer, no Google script runs at all.
 

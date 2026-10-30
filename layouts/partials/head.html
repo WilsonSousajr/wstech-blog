@@ -81,6 +81,12 @@
 {{ $css := slice $main $chroma | resources.Concat "css/bundle.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
 
+{{/* Vercel Web Analytics: cookieless page counts, so it runs without consent. Production only. */}}
+{{ if hugo.IsProduction }}
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+{{ end }}
+
 {{/* Theme toggle behavior (also keeps the giscus iframe in sync) */}}
 {{ $js := resources.Get "js/theme.js" | minify | fingerprint }}
 <script src="{{ $js.RelPermalink }}" defer></script>

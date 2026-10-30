@@ -3,9 +3,13 @@ title: "Privacidade"
 description: "O que este blog e o wstech.tech coletam, e como recusar."
 ---
 
-Versão curta: nada é rastreado a menos que você aceite.
+Versão curta: um contador de páginas sem cookies roda sempre, e o Google Analytics só roda se você aceitar.
 
-## Analytics
+## Contagem de páginas
+
+Este blog usa o **Vercel Web Analytics** para contar visualizações e ver de onde as visitas vêm, como um link no LinkedIn. Ele não usa cookies e não guarda nada no seu dispositivo. A Vercel identifica uma visita por um hash da requisição que é zerado todo dia, então eu não consigo te seguir de um dia para o outro nem saber quem você é. Eu vejo só totais por página, origem, país e tipo de dispositivo.
+
+## Google Analytics
 
 Este blog e o [wstech.tech](https://wstech.tech) usam o **Google Analytics 4** para contar quais páginas são lidas, de onde os leitores vêm (aproximadamente) e qual dispositivo usam. Ele **só é carregado depois que você clica em "Aceitar"** no aviso de cookies. Se você recusar, ou não responder, nenhum script do Google é executado.
 
