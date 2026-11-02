@@ -1,6 +1,6 @@
 {{- /* Structured data: BlogPosting on posts, Blog on the home page. Expects dict page/description/image/isPost. */ -}}
 {{- $p := .page -}}
-{{- $author := dict "@type" "Person" "name" site.Params.author "url" site.Params.portfolioURL -}}
+{{- $author := dict "@type" "Person" "name" site.Params.author "url" site.Params.portfolioURL "sameAs" (slice site.Params.portfolioURL site.Params.linkedinURL) -}}
 {{- $ld := dict -}}
 {{- if .isPost -}}
   {{- $ld = dict

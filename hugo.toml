@@ -60,6 +60,7 @@ capitalizeListTitles = false   # tag pages titled "ai", not "Ai"   # real lastmo
 
 [params]
   portfolioURL = "https://wstech.tech"
+  linkedinURL = "https://www.linkedin.com/in/wilsonsousajr"
   author = "Wilson Sousa"
   description = "Engineering, software, and the occasional rant."
   sections = ["posts", "off-topic"]   # what the home feed and tabs list, in order

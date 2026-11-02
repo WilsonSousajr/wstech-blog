@@ -1,6 +1,7 @@
 noPosts = "No posts yet."
 minRead = "min read"
 toggleTheme = "Toggle theme"
+allPosts = "All posts"
 backTo = "Back to"
 tabAll = "All"
 tabsLabel = "Sections"
