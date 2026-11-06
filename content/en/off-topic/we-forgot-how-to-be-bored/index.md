@@ -6,6 +6,8 @@ description: "I uninstalled social media, and my fingers kept reaching for apps 
 slug: we-forgot-how-to-be-bored
 tags:
   - attention
+aliases:
+  - "/posts/we-forgot-how-to-be-bored/"
 ---
 > **TL;DR:** Every empty moment in my day got filled with fast dopamine, and I never decided that. When I uninstalled the apps, my fingers kept going to where they used to be. Slow things got my brain back to a slower pace, and a week later I spent 30 minutes doing absolutely nothing. It was the best rest I'd had in a long time.
 

@@ -6,6 +6,8 @@ description: "Desinstalei as redes sociais e meus dedos continuaram indo atrás 
 slug: a-gente-esqueceu-como-ficar-entediado
 tags:
   - attention
+aliases:
+  - "/posts/a-gente-esqueceu-como-ficar-entediado/"
 ---
 > **TL;DR:** Todo momento vazio do meu dia virou dopamina rápida, e eu nunca decidi isso. Quando desinstalei os apps, meus dedos continuavam indo pro lugar onde eles ficavam. Coisas lentas trouxeram meu cérebro de volta pra um ritmo mais calmo, e uma semana depois eu passei 30 minutos sem fazer absolutamente nada. Foi o melhor descanso que eu tive em muito tempo.
 
